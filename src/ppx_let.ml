@@ -98,6 +98,10 @@ let expand_if extension_name ~loc expr then_ else_ =
     ; case ~lhs:(pbool ~loc false) ~guard:None ~rhs:else_
     ]
 
+let expand_seq extension_name ~loc first_ second_ =
+  expand_match extension_name ~loc first_
+    [ case ~lhs:(punit ~loc) ~guard:None ~rhs:second_ ]
+
 let expand ~loc:_ ~path:_ extension_name expr =
   let loc = expr.pexp_loc in
   let expansion =
@@ -124,9 +128,11 @@ let expand ~loc:_ ~path:_ extension_name expr =
             (Extension_name.to_string extension_name)
       in
       expand_if extension_name ~loc expr then_ else_
+    | Pexp_sequence (first_, second_) ->
+      expand_seq extension_name ~loc first_ second_
     | _ ->
       Location.raise_errorf ~loc
-        "'%%%s' can only be used with 'let', 'match', and 'if'"
+        "'%%%s' can only be used with 'let', 'match', 'if', and ';'"
         (Extension_name.to_string extension_name)
   in
   { expansion with pexp_attributes = expr.pexp_attributes @ expansion.pexp_attributes }
