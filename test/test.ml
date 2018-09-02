@@ -41,7 +41,7 @@ module Monad_example = struct
     return (x + y + (u * v))
 
   let _mg a : _ X.t =
-    let%map x = a in
+    let%map x : int X.t = a in
     x + 1
 
   let _mg' a b c : _ X.t =
@@ -137,4 +137,10 @@ module Applicative_example = struct
     match%map a with
     | 0 -> true
     | _ -> false
+end
+
+module Example_without_open = struct
+  let _ag a : _ Applicative_example.X.t =
+    let%map.Applicative_example.X.Let_syntax x = a in
+    x + 1
 end
