@@ -1,22 +1,17 @@
-opam-version: "1.2"
+opam-version: "2.0"
+synopsis: "Monadic let-bindings"
+description: "Part of the Jane Street's PPX rewriters collection."
 maintainer: "opensource@janestreet.com"
-authors: ["Jane Street Group, LLC <opensource@janestreet.com>"]
+authors: "Jane Street Group, LLC <opensource@janestreet.com>"
+license: "MIT"
 homepage: "https://github.com/janestreet/ppx_let"
 bug-reports: "https://github.com/janestreet/ppx_let/issues"
-dev-repo: "git+https://github.com/janestreet/ppx_let.git"
-license: "MIT"
-build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
-]
 depends: [
+  "ocaml" {>= "4.04.2"}
   "base"
-  "jbuilder"                {build & >= "1.0+beta18.1"}
+  "jbuilder" {build & >= "1.0+beta18.1"}
   "ocaml-migrate-parsetree" {>= "1.0"}
-  "ppxlib"                  {>= "0.1.0"}
+  "ppxlib" {>= "0.1.0"}
 ]
-available: [ ocaml-version >= "4.04.2" ]
-descr: "
-Monadic let-bindings
-
-Part of the Jane Street's PPX rewriters collection.
-"
+build: ["jbuilder" "build" "-p" name "-j" jobs]
+dev-repo: "git+https://github.com/janestreet/ppx_let.git"
